@@ -1,0 +1,54 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: ecommerce-backend
+
+  # ---- Default: H2 in-memory DB (zero setup, great for demo/interview) ----
+  datasource:
+    url: jdbc:h2:mem:ecommercedb;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true # let Hibernate create tables BEFORE data.sql runs
+
+  sql:
+    init:
+      mode: always
+
+  # ---- To use MySQL instead, comment the H2 block above and uncomment below ----
+  # datasource:
+  #   url: jdbc:mysql://localhost:3306/ecommerce_db?createDatabaseIfNotExist=true
+  #   username: root
+  #   password: yourpassword
+  #   driver-class-name: com.mysql.cj.jdbc.Driver
+  # jpa:
+  #   hibernate:
+  #     ddl-auto: update
+  #   database-platform: org.hibernate.dialect.MySQLDialect
+
+app:
+  jwt:
+    secret: "ThisIsAVeryLongSecretKeyForJWTSigningPurposesChangeInProd123456"
+    expiration-ms: 86400000 # 24 hours
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
